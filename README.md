@@ -126,7 +126,7 @@ $('.triiger).contextMenu(method,selector,options);
 3. There are different options to change the behaviour of context menu. This parameter is optional where all options contain some default value.
 
 For menu mode input can be given in two way.<br />
-Ul list.<br />
+<strong>Ul list.</strong><br />
 Example for the list
 <pre><code>
 &lt;ul class=&quot;contextMenu&quot;&gt;
@@ -152,7 +152,7 @@ Example for the list
 &lt;/ul&gt;
 </code></pre>
   
-JSON object.<br />
+<strong>JSON object.</strong><br />
 <pre><code>
     var menu = [{
   	    name: 'create',
