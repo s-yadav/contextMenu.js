@@ -98,7 +98,7 @@ contextMenu.js
   </tr>
   <tr>
     <td>popup</td>
-    <td>If you just want to display a element at your trigger point popup mode serve best. This will just show element defined in selector while adjusting according to view port.</td>
+    <td>If you just want to display an popup window at your trigger point popup mode serve best. This will just show element defined in selector while adjusting it according to view port.</td>
   </tr>
   <tr>
     <td>update</td>
@@ -106,7 +106,7 @@ contextMenu.js
   </tr>
   <tr>
     <td>refresh</td>
-    <td>If new&nbsp;trigger with specific selector is added, this method is used to initialize context menu on that element.</td>
+    <td>If new trigger with specific selector is added, this method is used to initialize context menu on those newly added elements.</td>
   </tr>
   <tr>
     <td>destroy</td>
