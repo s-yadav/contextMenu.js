@@ -1,6 +1,5 @@
 /* CSS Document */
 .iw-contextMenu {
-	position:fixed;
 	background:#F4F4F4;
 	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -11,6 +10,7 @@
 	border:1px solid #E6E6E6;
 	display:none;
 	z-index:1000;
+	overflow:auto;
 }
 .iw-contextMenu li {
 	list-style:none;

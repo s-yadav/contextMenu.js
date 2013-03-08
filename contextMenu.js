@@ -1,9 +1,9 @@
 /*
- *contextMenu.js v 1.0.0 Beta
- *Author: Sudhanshu Yadav
- *s-yadav.github.com
- *Copyright (c) 2013 Sudhanshu Yadav.
- *Dual licensed under the MIT and GPL licenses
+	*contextMenu.js v 1.0.0 Beta
+	*Author: Sudhanshu Yadav
+	*s-yadav.github.com
+	*Copyright (c) 2013 Sudhanshu Yadav.
+	*Dual licensed under the MIT and GPL licenses
 */
 ;(function ($, window, document, undefined) {
     $.fn.contextMenu = function (method, selector, option) {
@@ -45,6 +45,7 @@
         mouseClick: 'left',
         verAdjust: 0,
         horAdjust: 0,
+		containment:window,
         sizeStyle: 'auto', //allowed values are auto and content (popup size will be according content size)
         position: 'auto', //allowed values are top, left, bottom and right
         //callback
@@ -221,12 +222,12 @@
             //to add temprory textbox
             internalMethods.tempTextBox();
 
-            //to bind event		
+            //to bind event
             trigger.bind(eventType + '.contextMenu', internalMethods.eventHandler);
 
             //to stop bubbling in menu
-            menu.bind('click mouseenter mouseleave', function () {
-                return false;
+            menu.bind('click mouseenter mouseleave', function (e) {
+                e.stopPropagation();
             });
         },
         eventHandler: function (e) {
@@ -235,7 +236,8 @@
                 trgrData = trigger.data('iw-menuData'),
                 menu = trgrData.menu,
                 menuData = menu.data('iw-menuData'),
-                option = trgrData.option;
+                option = trgrData.option,
+				cntnmnt=option.containment;
 
             //call open callback
             option.onOpen.call(this, {
@@ -243,28 +245,35 @@
                 menu: menu
             }, e);
 
-            var windowHeight = $(window).height(),
-                windowWidth = $(window).width(),
+			
+            var cObj=$(cntnmnt);
+				cHeight = cObj.height(),
+                cWidth = cObj.width(),
                 menuHeight = menuData.menuHeight,
                 menuWidth = menuData.menuWidth,
                 verAdjust = parseInt(option.verAdjust),
                 horAdjust = parseInt(option.horAdjust),
-				posLeft=false;
+posLeft=false;
+
+			//to add relative position if no position is defined on containment
+			if((cntnmnt!=window)&&(cObj.css('position')=='static')){
+				cObj.css('position','relative');
+				}
 
             if (option.sizeStyle == 'auto') {
-                menuHeight = Math.min(menuHeight, (windowHeight));
-                menuWidth = Math.min(menuWidth, (windowWidth));
+                menuHeight = Math.min(menuHeight,cHeight);
+                menuWidth = Math.min(menuWidth,cWidth);
             }
             if (option.displayAround == 'cursor') {
-                var left = e.pageX - $(window).scrollLeft(),
-                    top = e.pageY - $(window).scrollTop();
+                var left = cntnmnt==window?e.pageX - cObj.scrollLeft():e.pageX-cObj.offset().left,
+                    top =  cntnmnt==window?e.pageY - cObj.scrollTop():e.pageY-cObj.offset().top;
                 var bottomMenu = top + menuHeight,
                     rightMenu = left + menuWidth;
                 //max height and width of context menu
-                if (bottomMenu > windowHeight) {
+                if (bottomMenu > cHeight) {
                     if ((top - menuHeight) < 0) {
-                        if ((bottomMenu - windowHeight) < (menuHeight - top)) {
-                            top = windowHeight - menuHeight;
+                        if ((bottomMenu - cHeight) < (menuHeight - top)) {
+                            top = cHeight - menuHeight;
                             verAdjust = -1 * verAdjust;
                         } else {
                             top = 0;
@@ -275,12 +284,12 @@
                         verAdjust = -1 * verAdjust;
                     }
                 }
-                if (rightMenu > windowWidth) {
+                if (rightMenu > cWidth) {
                     if ((left - menuWidth) < 0) {
-                        if ((rightMenu - windowWidth) < (menuWidth - left)) {
-                            left = windowWidth - menuWidth;
+                        if ((rightMenu - cWidth) < (menuWidth - left)) {
+                            left = cWidth - menuWidth;
                             horAdjust = -1 * horAdjust;
-							posLeft=true;
+posLeft=true;
                         } else {
                             left = 0;
                             horAdjust = 0;
@@ -288,14 +297,14 @@
                     } else {
                         left = left - menuWidth;
                         horAdjust = -1 * horAdjust;
-						posLeft=true;
+posLeft=true;
                     }
                 }
             } else if (option.displayAround == 'trigger') {
                 var triggerHeight = trigger.outerHeight(true),
                     triggerWidth = trigger.outerWidth(true),
-                    triggerLeft = trigger.offset().left - $(window).scrollLeft(),
-                    triggerTop = trigger.offset().top - $(window).scrollTop(),
+                    triggerLeft = cntnmnt==window?trigger.offset().left - cObj.scrollLeft():trigger.position().left,
+                    triggerTop = cntnmnt==window?trigger.offset().top - cObj.scrollTop():trigger.position().top,
                     left = triggerLeft + triggerWidth,
                     top = triggerTop,
                     leftShift = triggerWidth;
@@ -305,10 +314,10 @@
                 var bottomMenu = top + menuHeight,
                     rightMenu = left + menuWidth;
                 //max height and width of context menu
-                if (bottomMenu > windowHeight) {
+                if (bottomMenu > cHeight) {
                     if ((top - menuHeight) < 0) {
-                        if ((bottomMenu - windowHeight) < (menuHeight - top)) {
-                            top = windowHeight - menuHeight;
+                        if ((bottomMenu - cHeight) < (menuHeight - top)) {
+                            top = cHeight - menuHeight;
                             verAdjust = -1 * verAdjust;
                         } else {
                             top = 0;
@@ -319,12 +328,12 @@
                         verAdjust = -1 * verAdjust;
                     }
                 }
-                if (rightMenu > windowWidth) {
+                if (rightMenu > cWidth) {
                     if ((left - menuWidth) < 0) {
-                        if ((rightMenu - windowWidth) < (menuWidth - left)) {
-                            left = windowWidth - menuWidth;
+                        if ((rightMenu - cWidth) < (menuWidth - left)) {
+                            left = cWidth - menuWidth;
                             horAdjust = -1 * horAdjust;
-							posLeft=true;
+posLeft=true;
                             leftShift = -triggerWidth;
                         } else {
                             left = 0;
@@ -334,7 +343,7 @@
                     } else {
                         left = left - menuWidth - triggerWidth;
                         horAdjust = -1 * horAdjust;
- 						posLeft=true;
+  posLeft=true;
                        leftShift = -triggerWidth;
                     }
                 }
@@ -349,12 +358,12 @@
                     left = triggerLeft - menuWidth;
                     horAdjust = parseInt(option.horAdjust);
                 } else if (option.position == 'bottom') {
-                    menuHeight = Math.min(menuData.menuHeight, (windowHeight - triggerTop - triggerHeight));
+                    menuHeight = Math.min(menuData.menuHeight, (cHeight - triggerTop - triggerHeight));
                     top = triggerTop + triggerHeight;
                     verAdjust = parseInt(option.verAdjust);
                     left = left - leftShift;
                 } else if (option.position == 'right') {
-                    menuWidth = Math.min(menuData.menuWidth, (windowWidth - triggerLeft - triggerWidth));
+                    menuWidth = Math.min(menuData.menuWidth, (cWidth - triggerLeft - triggerWidth));
                     left = triggerLeft + triggerWidth;
                     horAdjust = parseInt(option.horAdjust);
                 }
@@ -366,6 +375,7 @@
 
             //applying css property
             var cssObj = {
+				'position':cntnmnt==window?'fixed':'absolute',
                 'display': 'inline-block',
                 'top': top + verAdjust + 'px',
                 'height': '',
@@ -385,8 +395,8 @@
 
             //to assign event
            if(!trigger.is('input,select,textarea')&&(trgrData.method=='menu')){
-		    $('#iw-tempTxt').focus();
-		   }
+$('#iw-tempTxt').focus();
+}
 
             //to add current menu class
             if (trigger.closest('.iw-contextMenu').length == 0) {
@@ -404,8 +414,10 @@
             }
             $('body').click(dataParm, internalMethods.clickEvent);
             $(document.documentElement).keyup(dataParm, internalMethods.keyEvent);
-            $(window).bind('scroll resize', dataParm, internalMethods.scrollEvent);
-        },
+            if(cntnmnt==window){
+				$(window).bind('scroll resize', dataParm, internalMethods.scrollEvent);
+			}
+		},
 
         scrollEvent: function (e) {
             internalMethods.closeContextMenu(e.data.option, e.data.trigger, e.data.menu, e);
@@ -470,8 +482,8 @@
                         selector.addClass('iw-curMenu');
                         curMenu.removeClass('iw-curMenu');
                         curMenu = selector;
-						optList = curMenu.children('li:not(.m-disable)');
-						selected = optList.filter('.iw-selectedMenu');
+optList = curMenu.children('li:not(.m-disable)');
+selected = optList.filter('.iw-selectedMenu');
                         first();
                     }
                 },
@@ -557,7 +569,8 @@
                 if (baseTrigger.index(trgr[0]) == -1) {
                     trgr.append(menuList)
                 } else {
-                    $('body').append(menuList);
+                    var par=option.containment==window?'body':option.containment;
+					$(par).append(menuList);
                 }
 
                 internalMethods.onOff($('#iw-contextMenu' + randomNum));
