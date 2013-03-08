@@ -1,9 +1,9 @@
 /*
-contextMenu.js v 1.0.0 Beta
-Author: Sudhanshu Yadav
-s-yadav.github.com
-Copyright (c) 2013 Sudhanshu Yadav.
-Dual licensed under the MIT and GPL licenses
+ *contextMenu.js v 1.0.0 Beta
+ *Author: Sudhanshu Yadav
+ *s-yadav.github.com
+ *Copyright (c) 2013 Sudhanshu Yadav.
+ *Dual licensed under the MIT and GPL licenses
 */
 ;(function ($, window, document, undefined) {
     $.fn.contextMenu = function (method, selector, option) {
@@ -248,7 +248,8 @@ Dual licensed under the MIT and GPL licenses
                 menuHeight = menuData.menuHeight,
                 menuWidth = menuData.menuWidth,
                 verAdjust = parseInt(option.verAdjust),
-                horAdjust = parseInt(option.horAdjust);
+                horAdjust = parseInt(option.horAdjust),
+				posLeft=false;
 
             if (option.sizeStyle == 'auto') {
                 menuHeight = Math.min(menuHeight, (windowHeight));
@@ -279,6 +280,7 @@ Dual licensed under the MIT and GPL licenses
                         if ((rightMenu - windowWidth) < (menuWidth - left)) {
                             left = windowWidth - menuWidth;
                             horAdjust = -1 * horAdjust;
+							posLeft=true;
                         } else {
                             left = 0;
                             horAdjust = 0;
@@ -286,6 +288,7 @@ Dual licensed under the MIT and GPL licenses
                     } else {
                         left = left - menuWidth;
                         horAdjust = -1 * horAdjust;
+						posLeft=true;
                     }
                 }
             } else if (option.displayAround == 'trigger') {
@@ -321,6 +324,7 @@ Dual licensed under the MIT and GPL licenses
                         if ((rightMenu - windowWidth) < (menuWidth - left)) {
                             left = windowWidth - menuWidth;
                             horAdjust = -1 * horAdjust;
+							posLeft=true;
                             leftShift = -triggerWidth;
                         } else {
                             left = 0;
@@ -330,7 +334,8 @@ Dual licensed under the MIT and GPL licenses
                     } else {
                         left = left - menuWidth - triggerWidth;
                         horAdjust = -1 * horAdjust;
-                        leftShift = -triggerWidth;
+ 						posLeft=true;
+                       leftShift = -triggerWidth;
                     }
                 }
                 //test end
@@ -372,14 +377,16 @@ Dual licensed under the MIT and GPL licenses
             if (option.sizeStyle == 'auto') {
                 cssObj.height = menuHeight - outerTopBottom + 'px';
                 cssObj.width = menuWidth - outerLeftRight + 20 + 'px';
-                left = left + (20 * (option.horAdjust == horAdjust ? 0 : -1));
+                left = left + (20 * (posLeft?-1:0));
             }
             cssObj.left = left + horAdjust + 'px';
 
             menu.css(cssObj);
 
             //to assign event
-            $('#iw-tempTxt').focus();
+           if(!trigger.is('input,select,textarea')&&(trgrData.method=='menu')){
+		    $('#iw-tempTxt').focus();
+		   }
 
             //to add current menu class
             if (trigger.closest('.iw-contextMenu').length == 0) {
@@ -436,7 +443,7 @@ Dual licensed under the MIT and GPL licenses
             }
             if (e.data.method == 'menu') {
                 var curMenu = $('.iw-curMenu'),
-                    optList = curMenu.children('li:not(.m-disable)');
+                    optList = curMenu.children('li:not(.m-disable)'),
                 selected = optList.filter('.iw-selectedMenu'),
                 index = optList.index(selected),
                 focusOn = function (elm) {
@@ -460,9 +467,11 @@ Dual licensed under the MIT and GPL licenses
                     if (menuData) {
                         selected.triggerHandler('mouseenter.contextMenu');
                         var selector = menuData.menu;
+                        selector.addClass('iw-curMenu');
                         curMenu.removeClass('iw-curMenu');
                         curMenu = selector;
-                        selector.addClass('iw-curMenu');
+						optList = curMenu.children('li:not(.m-disable)');
+						selected = optList.filter('.iw-selectedMenu');
                         first();
                     }
                 },
