@@ -302,6 +302,7 @@
                 menuWidth = Math.min(menuWidth, cWidth);
                 menuWidth = menuWidth + 20;
             }
+
             if (option.displayAround == 'cursor') {
                 var left = cntWin ? e.pageX - cObj.scrollLeft() : e.pageX - cLeft,
                     top = cntWin ? e.pageY - cObj.scrollTop() : e.pageY - cTop;
@@ -421,6 +422,7 @@
                 cssObj.height = menuHeight - outerTopBottom + 'px';
                 cssObj.width = menuWidth - outerLeftRight + 'px';
             }
+
             //to get position from offset parent
             if (option.left != 'auto') {
                 left = iMethods.getPxSize(option.left, cWidth)
@@ -539,10 +541,10 @@
                         selected.click();
                         break;
                     case 40:
-                        selected.length == 0 ? first() : next();
+                        index == optList.length - 1 || selected.length == 0 ? first() : next();
                         break;
                     case 38:
-                        selected.length == 0 ? last() : prev();
+                        index == 0 || selected.length == 0 ? last() : prev();
                         break;
                     case 33:
                         first();
@@ -575,6 +577,9 @@
             }, e);
         },
         getPxSize: function (size, of) {
+            if (!isNaN(size)) {
+                return size;
+            }
             if (size.indexOf('%') != -1) {
                 return parseInt(size) * of / 100;
             } else {
@@ -684,10 +689,7 @@
                 $('body').append('<input type="text" id="iw-tempTxt" />');
                 $('#iw-tempTxt').css({
                     'position': 'fixed',
-                    'bottom': '1px',
-                    'left': '1px',
-                    'width': '0px',
-                    'border': 'none',
+                    'left': '1000000px',
                 });
             }
 
