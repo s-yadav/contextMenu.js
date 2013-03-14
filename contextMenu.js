@@ -395,7 +395,7 @@
                 } else if (option.position == 'bottom') {
                     menuHeight = Math.min(menuData.menuHeight, (cHeight - triggerTop - triggerHeight));
                     top = triggerTop + triggerHeight;
-                    va = option.verAdjust;
+                    va = verAdjust;
                     left = left - leftShift;
                 } else if (option.position == 'right') {
                     menuWidth = Math.min(menuData.menuWidth, (cWidth - triggerLeft - triggerWidth));
