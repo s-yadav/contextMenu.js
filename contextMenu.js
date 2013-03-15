@@ -304,8 +304,8 @@
             }
 
             if (option.displayAround == 'cursor') {
-                var left = cntWin ? e.pageX - cObj.scrollLeft() : e.pageX - cLeft,
-                    top = cntWin ? e.pageY - cObj.scrollTop() : e.pageY - cTop;
+                var left = cntWin ? e.clientX  : e.clientX +$(window).scrollLeft() - cLeft,
+                    top = cntWin ? e.clientY  : e.clientY +$(window).scrollTop() - cTop;
                 var bottomMenu = top + menuHeight,
                     rightMenu = left + menuWidth;
                 //max height and width of context menu
@@ -403,7 +403,7 @@
                     ha = horAdjust;
                 }
             }
-            //to draw contextMenu
+			//to draw contextMenu
             var outerLeftRight = menu.outerWidth(true) - menu.width(),
                 outerTopBottom = menu.outerHeight(true) - menu.height();
 
@@ -689,7 +689,10 @@
                 $('body').append('<input type="text" id="iw-tempTxt" />');
                 $('#iw-tempTxt').css({
                     'position': 'fixed',
-                    'left': '1000000px',
+                    'bottom': '0px',
+					'width':'1px',
+					'font-size':'1px',
+					'border':'0px'
                 });
             }
 
