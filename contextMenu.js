@@ -278,13 +278,13 @@
 
             var cObj = $(cntnmnt);
             cHeight = cObj.innerHeight(),
-                cWidth = cObj.innerWidth(),
-                cTop = 0,
-                cLeft = 0,
-                menuHeight = menuData.menuHeight,
-                menuWidth = menuData.menuWidth,
-                va = verAdjust = parseInt(option.verAdjust),
-                ha = horAdjust = parseInt(option.horAdjust);
+            cWidth = cObj.innerWidth(),
+            cTop = 0,
+            cLeft = 0,
+            menuHeight = menuData.menuHeight,
+            menuWidth = menuData.menuWidth,
+            va = verAdjust = parseInt(option.verAdjust),
+            ha = horAdjust = parseInt(option.horAdjust);
 
             if (!cntWin) {
                 cTop = cObj.offset().top;
@@ -304,8 +304,8 @@
             }
 
             if (option.displayAround == 'cursor') {
-                var left = cntWin ? e.clientX  : e.clientX +$(window).scrollLeft() - cLeft,
-                    top = cntWin ? e.clientY  : e.clientY +$(window).scrollTop() - cTop;
+                var left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft() - cLeft,
+                    top = cntWin ? e.clientY : e.clientY + $(window).scrollTop() - cTop;
                 var bottomMenu = top + menuHeight,
                     rightMenu = left + menuWidth;
                 //max height and width of context menu
@@ -403,7 +403,7 @@
                     ha = horAdjust;
                 }
             }
-			//to draw contextMenu
+            //to draw contextMenu
             var outerLeftRight = menu.outerWidth(true) - menu.width(),
                 outerTopBottom = menu.outerHeight(true) - menu.height();
 
@@ -688,11 +688,15 @@
             if (textBox.length == 0) {
                 $('body').append('<input type="text" id="iw-tempTxt" />');
                 $('#iw-tempTxt').css({
-                    'position': 'fixed',
-                    'bottom': '0px',
-					'width':'1px',
-					'font-size':'1px',
-					'border':'0px'
+                    position: 'fixed',
+                    bottom: '0px',
+                    'max-width': '1px',
+                    'max-height': '1px',
+                    'font-size': '1px',
+                    border: '0px',
+                    left: '0px',
+                    opacity: '.1',
+                    padding: '0px'
                 });
             }
 
