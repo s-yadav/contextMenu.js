@@ -1,11 +1,11 @@
 /*
-	*contextMenu.js v 1.0.0 Beta
-	*Author: Sudhanshu Yadav
-	*s-yadav.github.com
-	*Copyright (c) 2013 Sudhanshu Yadav.
-	*Dual licensed under the MIT and GPL licenses
-*/
-;(function ($, window, document, undefined) {
+ *contextMenu.js v 1.0.0 Beta
+ *Author: Sudhanshu Yadav
+ *s-yadav.github.com
+ *Copyright (c) 2013 Sudhanshu Yadav.
+ *Dual licensed under the MIT and GPL licenses
+ */;
+(function ($, window, document, undefined) {
     $.fn.contextMenu = function (method, selector, option) {
         "use strict";
         //parameter fix
@@ -537,27 +537,27 @@
                         }
                     };
                 switch (keyCode) {
-                    case 13:
-                        selected.click();
-                        break;
-                    case 40:
-                        index == optList.length - 1 || selected.length == 0 ? first() : next();
-                        break;
-                    case 38:
-                        index == 0 || selected.length == 0 ? last() : prev();
-                        break;
-                    case 33:
-                        first();
-                        break;
-                    case 34:
-                        last();
-                        break;
-                    case 37:
-                        parMenu();
-                        break;
-                    case 39:
-                        subMenu();
-                        break;
+                case 13:
+                    selected.click();
+                    break;
+                case 40:
+                    index == optList.length - 1 || selected.length == 0 ? first() : next();
+                    break;
+                case 38:
+                    index == 0 || selected.length == 0 ? last() : prev();
+                    break;
+                case 33:
+                    first();
+                    break;
+                case 34:
+                    last();
+                    break;
+                case 37:
+                    parMenu();
+                    break;
+                case 39:
+                    subMenu();
+                    break;
                 }
             }
         },
@@ -690,8 +690,7 @@
                 $('#iw-tempTxt').css({
                     position: 'fixed',
                     bottom: '0px',
-                    'max-width': '1px',
-                    'max-height': '1px',
+                    'width': '1px',
                     'font-size': '1px',
                     border: '0px',
                     left: '0px',
