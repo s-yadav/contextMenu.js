@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.0.0 Beta
+ *contextMenu.js v 1.0.2 Beta
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
