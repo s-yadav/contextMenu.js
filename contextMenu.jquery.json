@@ -19,7 +19,7 @@
     "dependencies": {
         "jquery": ">=1.6"
     },
-	"keywords":["context menu","submenu","window like context menu","jquery context menu","popup menu","menu"]
+	"keywords":["context","submenu","window","jquery","popup","menu","tooltip"],
     "demo": "http://s-yadav.github.io/contextMenu.html#demo",
     "docs": "http://s-yadav.github.io/contextMenu.html#documentation",
     "homepage": "http://s-yadav.github.io/contextMenu.html",
