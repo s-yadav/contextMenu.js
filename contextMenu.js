@@ -269,7 +269,7 @@
 
             //to close previous open menu.
             if (!btChck) {
-                $('.iw-contextMenu[menuId="' + menuData.menuId + '"]').css('display', 'none');
+                $('.iw-contextMenu').css('display', 'none');
             }
 
             //call open callback
