@@ -1,11 +1,11 @@
 /*
- *contextMenu.js v 1.0.2 Beta
+ *contextMenu.js v 1.0.3 
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
  *Dual licensed under the MIT and GPL licenses
- */;
-(function ($, window, document, undefined) {
+ */
+;(function ($, window, document, undefined) {
     $.fn.contextMenu = function (method, selector, option) {
         "use strict";
         //parameter fix
@@ -132,7 +132,6 @@
             return null;
         },
         destroy: function () {
-            $('#contextMenuTempTextBox').remove();
             this.each(function () {
                 var trgr = $(this),
                     menuId = trgr.data('iw-menuData').menuId,
@@ -239,9 +238,6 @@
                 var eventType = option.triggerOn;
             }
 
-
-            //to add temprory textbox
-            iMethods.tempTextBox();
 
             //to bind event
             trigger.bind(eventType + '.contextMenu', iMethods.eventHandler);
@@ -449,6 +445,9 @@
             option.afterOpen.call(this, clbckData, e);
 
 
+            //to add temprory textbox
+            iMethods.tempTextBox();
+
             //to assign event
             if (!trigger.is('input,select,textarea') && (trgrData.method == 'menu')) {
                 $('#iw-tempTxt').focus();
@@ -459,6 +458,8 @@
                 $('.iw-curMenu').removeClass('iw-curMenu');
                 menu.addClass('iw-curMenu');
             }
+
+
 
             $(document.documentElement).unbind('keyup', iMethods.keyEvent);
             $(document).unbind('click', iMethods.clickEvent);
@@ -569,6 +570,9 @@
             $(window).unbind('scroll resize', iMethods.scrollEvent);
             $('.iw-contextMenu').hide();
             $(document).focus();
+
+            //to remove temprory textbox
+            $('#iw-tempTxt').remove();
 
             //call close function
             option.onClose.call(this, {
@@ -684,21 +688,19 @@
         },
         tempTextBox: function () {
             //to add a temproryTextBox
-            var textBox = $('#iw-tempTxt');
-            if (textBox.length == 0) {
-                $('body').append('<input type="text" id="iw-tempTxt" />');
-                $('#iw-tempTxt').css({
-                    position: 'fixed',
-                    bottom: '0px',
-                    'width': '1px',
-                    'font-size': '1px',
-                    border: '0px',
-                    left: '0px',
-                    opacity: '.1',
-                    padding: '0px'
-                });
-            }
-
+            var tempText = $('<input type="text" id="iw-tempTxt" />');
+            tempText.css({
+                position: 'fixed',
+                bottom: '0px',
+                'width': '1px',
+                'font-size': '1px',
+                'outline': 'none',
+                border: '0px',
+                left: '0px',
+                opacity: '.1',
+                padding: '0px'
+            });
+            $('body').append(tempText);
         },
         optionOtimizer: function (method, option) {
             if (!option) {
