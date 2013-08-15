@@ -114,7 +114,7 @@ contextMenu.js
 </table>
 Callback accept two argument. <br />
 <strong>1. data :</strong> Which containg refrence to trigger and menu.<br />
-You can get trigger and menu using data.trigger and trigger.menu.<br />
+You can get trigger and menu using data.trigger and data.menu.<br />
 <strong>2. event :</strong> A event object which is binded with trigger to open context menu.</p>
 Inside callback this refers to trigger element.
 <br />
