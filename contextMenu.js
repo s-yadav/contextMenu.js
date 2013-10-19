@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.0.3 
+ *contextMenu.js v 1.0.32 
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -47,6 +47,7 @@
         horAdjust: 0,
         top: 'auto',
         left: 'auto',
+		closeOther:true, //to close other already opened context menu
         containment: window,
         winEventClose: true,
         sizeStyle: 'auto', //allowed values are auto and content (popup size will be according content size)
@@ -120,10 +121,13 @@
                 newElm = this.filter(function () {
                     return $(this).data('iw-menuData') == null;
                 })
+			//to change basetrigger on refresh	
+			menuData.option.baseTrigger	=this;
                 iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
         },
+		//to get value of a key
         value: function (key) {
-            var menuData = $(this).data('iw-menuData');
+            var menuData = this.data('iw-menuData');
             if (menuData[key]) {
                 return menuData[key];
             } else if (menuData.option) {
@@ -174,11 +178,6 @@
             }
             //get base trigger
             var baseTrigger = option.baseTrigger;
-
-            //to add current menu.
-            if (baseTrigger.index(trigger) != -1) {
-                menu.addClass('iw-curMenu');
-            }
 
 
             if (!menuData) {
@@ -248,7 +247,7 @@
             });
         },
         eventHandler: function (e) {
-            e.preventDefault();
+			e.preventDefault();
             var trigger = $(this),
                 trgrData = trigger.data('iw-menuData'),
                 menu = trgrData.menu,
@@ -264,7 +263,7 @@
                 btChck = option.baseTrigger.index(trigger) == -1;
 
             //to close previous open menu.
-            if (!btChck) {
+            if (!btChck && option.closeOther) {
                 $('.iw-contextMenu').css('display', 'none');
             }
 
@@ -460,17 +459,14 @@
             }
 
 
-
-            $(document.documentElement).unbind('keyup', iMethods.keyEvent);
-            $(document).unbind('click', iMethods.clickEvent);
             var dataParm = {
                 trigger: trigger,
                 menu: menu,
                 option: option,
                 method: trgrData.method
             }
-            $(document).click(dataParm, iMethods.clickEvent);
-            $(document.documentElement).keyup(dataParm, iMethods.keyEvent);
+            $('html').unbind('click', iMethods.clickEvent).click(dataParm, iMethods.clickEvent);
+            $(document.documentElement).unbind('keyup', iMethods.keyEvent).keyup(dataParm, iMethods.keyEvent);
             if (option.winEventClose) {
                 $(window).bind('scroll resize', dataParm, iMethods.scrollEvent);
             }
@@ -566,7 +562,7 @@
 
             //unbind all events from top DOM
             $(document.documentElement).unbind('keyup', iMethods.keyEvent);
-            $(document).unbind('click', iMethods.clickEvent);
+            $('html').unbind('click', iMethods.clickEvent);
             $(window).unbind('scroll resize', iMethods.scrollEvent);
             $('.iw-contextMenu').hide();
             $(document).focus();

@@ -1,6 +1,6 @@
 {
     "name": "contextMenu.js",
-    "version": "1.0.31",
+    "version": "1.0.32",
     "title": "A light weight multi functional context menu plugin",
     "author": {
         "name": "Sudhanshu Yadav",
@@ -19,7 +19,7 @@
     "dependencies": {
         "jquery": ">=1.6"
     },
-	"keywords":["context","submenu","window","jquery","popup","menu","tooltip"],
+	"keywords":["context-menu","contextmenu","right-click-menu","context","submenu","jquery","popup","menu","tooltip"],
     "demo": "http://s-yadav.github.io/contextMenu.html#demo",
     "docs": "http://s-yadav.github.io/contextMenu.html#documentation",
     "homepage": "http://s-yadav.github.io/contextMenu.html",
