@@ -266,6 +266,9 @@
             if (!btChck && option.closeOther) {
                 $('.iw-contextMenu').css('display', 'none');
             }
+			
+			//to reset already selected menu item
+			$('.iw-mSelected').removeClass('iw-mSelected');
 
             //call open callback
             option.onOpen.call(this, clbckData, e);
