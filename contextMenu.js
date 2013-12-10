@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.0.32 
+ *contextMenu.js v 1.0.33 
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -714,7 +714,7 @@
                 option.triggerOn = 'contextmenu';
             }
 
-            if (['hover', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout', 'focusin', 'focusout'].indexOf(option.triggerOn) != -1) {
+            if ($.inArray(option.triggerOn,['hover', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout', 'focusin', 'focusout']) != -1) {
                 option.displayAround = 'trigger';
             }
             return option;
