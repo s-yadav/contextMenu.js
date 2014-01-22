@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.0.33 
+ *contextMenu.js v 1.3.0
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -17,7 +17,7 @@
 
 
         //need to check for array object
-        else if (selector != null) {
+        else if (selector) {
             if (!((selector instanceof Array) || (typeof selector === 'string') || (selector.nodeType) || (selector.jquery))) {
                 option = selector;
                 selector = null;
@@ -25,13 +25,13 @@
         }
 
         if ((selector instanceof Array) && (method != 'update')) {
-            method = 'menu'
+            method = 'menu';
         }
 
         var myoptions = option;
         if (method != 'update') {
             option = iMethods.optionOtimizer(method, option);
-            var myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
+            myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
             if (!myoptions.baseTrigger) {
                 myoptions.baseTrigger = this;
             }
@@ -47,7 +47,7 @@
         horAdjust: 0,
         top: 'auto',
         left: 'auto',
-		closeOther:true, //to close other already opened context menu
+        closeOther: true, //to close other already opened context menu
         containment: window,
         winEventClose: true,
         sizeStyle: 'auto', //allowed values are auto and content (popup size will be according content size)
@@ -56,7 +56,7 @@
         onOpen: function (data, event) {},
         afterOpen: function (data, event) {},
         onClose: function (data, event) {},
-    }
+    };
 
     var methods = {
         menu: function (selector, option) {
@@ -101,31 +101,38 @@
 
                 iMethods.onOff(menu);
                 menuData.option = $.extend({}, menuData.option, option);
-                trgr.data('iw-menuData', menuData)
+                trgr.data('iw-menuData', menuData);
 
                 //bind event again if trigger option has changed.
                 var eventType = menuData.option.triggerOn;
                 if (option) {
                     if (eventType != option.triggerOn) {
-                        trigger.unbind('.contextMenu');
+                        trgr.unbind('.contextMenu');
                         //to bind event
-                        trigger.bind(eventType + '.contextMenu', iMethods.eventHandler);
+                        trgr.bind(eventType + '.contextMenu', iMethods.eventHandler);
                     }
                 }
             });
         },
         refresh: function () {
             var menuData = this.filter(function () {
-                return $(this).data('iw-menuData') != null;
+                return !!$(this).data('iw-menuData');
             }).data('iw-menuData'),
                 newElm = this.filter(function () {
-                    return $(this).data('iw-menuData') == null;
-                })
-			//to change basetrigger on refresh	
-			menuData.option.baseTrigger	=this;
-                iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
+                    return !$(this).data('iw-menuData');
+                });
+            //to change basetrigger on refresh	
+            menuData.option.baseTrigger = this;
+            iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
         },
-		//to get value of a key
+        //to force context menu to close
+        close: function () {
+            var menuData = this.data('iw-menuData');
+            if (menuData) {
+                iMethods.closeContextMenu(menuData.option, this, menuData.menu, null);
+            }
+        },
+        //to get value of a key
         value: function (key) {
             var menuData = this.data('iw-menuData');
             if (menuData[key]) {
@@ -146,7 +153,7 @@
                     if (menu.hasClass('iw-created')) {
                         menu.remove();
                     } else {
-                        menu.removeClass('iw-contextMenu ' + cur.attr['menuId'])
+                        menu.removeClass('iw-contextMenu ' + menuId)
                             .removeAttr('menuId').removeData('iw-menuData');
                         //to destroy submenus
                         menu.find('li.iw-mTrigger').contextMenu('destroy');
@@ -222,8 +229,9 @@
             });
 
             //hover fix
+            var eventType;
             if (option.triggerOn == 'hover') {
-                var eventType = 'mouseenter';
+                eventType = 'mouseenter';
                 //hover out if display is of context menu is on hover
                 if (baseTrigger.index(trigger) != -1) {
                     baseTrigger.add(menu).bind('mouseleave.contextMenu', function (e) {
@@ -234,7 +242,7 @@
                 }
 
             } else {
-                var eventType = option.triggerOn;
+                eventType = option.triggerOn;
             }
 
 
@@ -247,7 +255,7 @@
             });
         },
         eventHandler: function (e) {
-			e.preventDefault();
+            e.preventDefault();
             var trigger = $(this),
                 trgrData = trigger.data('iw-menuData'),
                 menu = trgrData.menu,
@@ -266,23 +274,28 @@
             if (!btChck && option.closeOther) {
                 $('.iw-contextMenu').css('display', 'none');
             }
-			
-			//to reset already selected menu item
-			$('.iw-mSelected').removeClass('iw-mSelected');
+
+            //to reset already selected menu item
+            menu.find('.iw-mSelected').removeClass('iw-mSelected');
 
             //call open callback
             option.onOpen.call(this, clbckData, e);
 
 
-            var cObj = $(cntnmnt);
-            cHeight = cObj.innerHeight(),
-            cWidth = cObj.innerWidth(),
-            cTop = 0,
-            cLeft = 0,
-            menuHeight = menuData.menuHeight,
-            menuWidth = menuData.menuWidth,
-            va = verAdjust = parseInt(option.verAdjust),
-            ha = horAdjust = parseInt(option.horAdjust);
+            var cObj = $(cntnmnt),
+                cHeight = cObj.innerHeight(),
+                cWidth = cObj.innerWidth(),
+                cTop = 0,
+                cLeft = 0,
+                menuHeight = menuData.menuHeight,
+                menuWidth = menuData.menuWidth,
+                va, ha,
+                left = 0,
+                top = 0,
+                bottomMenu,
+                rightMenu,
+                verAdjust = va = parseInt(option.verAdjust),
+                horAdjust = ha = parseInt(option.horAdjust);
 
             if (!cntWin) {
                 cTop = cObj.offset().top;
@@ -302,10 +315,10 @@
             }
 
             if (option.displayAround == 'cursor') {
-                var left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft() - cLeft,
-                    top = cntWin ? e.clientY : e.clientY + $(window).scrollTop() - cTop;
-                var bottomMenu = top + menuHeight,
-                    rightMenu = left + menuWidth;
+                left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft() - cLeft;
+                top = cntWin ? e.clientY : e.clientY + $(window).scrollTop() - cTop;
+                bottomMenu = top + menuHeight;
+                rightMenu = left + menuWidth;
                 //max height and width of context menu
                 if (bottomMenu > cHeight) {
                     if ((top - menuHeight) < 0) {
@@ -340,14 +353,14 @@
                     triggerWidth = trigger.outerWidth(true),
                     triggerLeft = cntWin ? trigger.offset().left - cObj.scrollLeft() : trigger.offset().left - cLeft,
                     triggerTop = cntWin ? trigger.offset().top - cObj.scrollTop() : trigger.offset().top - cTop,
-                    left = triggerLeft + triggerWidth,
-                    top = triggerTop,
                     leftShift = triggerWidth;
 
+                left = triggerLeft + triggerWidth;
+                top = triggerTop;
 
 
-                var bottomMenu = top + menuHeight,
-                    rightMenu = left + menuWidth;
+                bottomMenu = top + menuHeight;
+                rightMenu = left + menuWidth;
                 //max height and width of context menu
                 if (bottomMenu > cHeight) {
                     if ((top - menuHeight) < 0) {
@@ -423,11 +436,11 @@
 
             //to get position from offset parent
             if (option.left != 'auto') {
-                left = iMethods.getPxSize(option.left, cWidth)
-            };
+                left = iMethods.getPxSize(option.left, cWidth);
+            }
             if (option.top != 'auto') {
-                top = iMethods.getPxSize(option.top, cHeight)
-            };
+                top = iMethods.getPxSize(option.top, cHeight);
+            }
             if (!cntWin) {
                 var oParPos = trigger.offsetParent().offset();
                 if (btChck) {
@@ -467,7 +480,7 @@
                 menu: menu,
                 option: option,
                 method: trgrData.method
-            }
+            };
             $('html').unbind('click', iMethods.clickEvent).click(dataParm, iMethods.clickEvent);
             $(document.documentElement).unbind('keyup', iMethods.keyEvent).keyup(dataParm, iMethods.keyEvent);
             if (option.winEventClose) {
@@ -500,20 +513,20 @@
                     selected = optList.filter('.iw-mSelected'),
                     index = optList.index(selected),
                     focusOn = function (elm) {
-                        selected.removeClass('iw-mSelected')
+                        selected.removeClass('iw-mSelected');
                         elm.addClass('iw-mSelected');
                     },
                     first = function () {
-                        focusOn(optList.filter(':first'))
+                        focusOn(optList.filter(':first'));
                     },
                     last = function () {
-                        focusOn(optList.filter(':last'))
+                        focusOn(optList.filter(':last'));
                     },
                     next = function () {
-                        focusOn(optList.filter(':eq(' + (index + 1) + ')'))
+                        focusOn(optList.filter(':eq(' + (index + 1) + ')'));
                     },
                     prev = function () {
-                        focusOn(optList.filter(':eq(' + (index - 1) + ')'))
+                        focusOn(optList.filter(':eq(' + (index - 1) + ')'));
                     },
                     subMenu = function () {
                         var menuData = selected.data('iw-menuData');
@@ -541,10 +554,10 @@
                     selected.click();
                     break;
                 case 40:
-                    index == optList.length - 1 || selected.length == 0 ? first() : next();
+                    (index == optList.length - 1 || selected.length == 0) ? first() : next();
                     break;
                 case 38:
-                    index == 0 || selected.length == 0 ? last() : prev();
+                    (index == 0 || selected.length == 0) ? last() : prev();
                     break;
                 case 33:
                     first();
@@ -617,7 +630,7 @@
                         title = selector[i].title || name,
                         disable = selector[i].disable,
                         list = $('<li title="' + title + '">' + name + '</li>');
-                    if ((img != null) && (img != '')) {
+                    if (img) {
                         list.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
                     }
 
@@ -636,7 +649,7 @@
                     }
                 }
                 if (baseTrigger.index(trgr[0]) == -1) {
-                    trgr.append(menuList)
+                    trgr.append(menuList);
                 } else {
                     var par = option.containment == window ? 'body' : option.containment;
                     $(par).append(menuList);
@@ -714,10 +727,10 @@
                 option.triggerOn = 'contextmenu';
             }
 
-            if ($.inArray(option.triggerOn,['hover', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout', 'focusin', 'focusout']) != -1) {
+            if ($.inArray(option.triggerOn, ['hover', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout', 'focusin', 'focusout']) != -1) {
                 option.displayAround = 'trigger';
             }
             return option;
         },
-    }
+    };
 })(jQuery, window, document);
