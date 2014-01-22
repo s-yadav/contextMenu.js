@@ -144,6 +144,10 @@ Inside callback this refers to trigger element.
     <td>destroy</td>
     <td>Remove context menu instance for that trigger completely.</td>
   </tr>
+  <tr>
+    <td>close</td>
+    <td>To manually close context menu.</td>
+  </tr>
 </table>
 Popup method is default when selector type is selector string , jquery object, DOM object. Menu method is default when selector type is JSON object.
 <h3 id="menuParameterDoc">Context menu parameters</h3>
