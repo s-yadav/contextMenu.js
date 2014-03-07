@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.1.0
+ *contextMenu.js v 1.1.1
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -69,10 +69,17 @@
             iMethods.contextMenuBind.call(this, selector, option, 'popup');
         },
         update: function (selector, option) {
-            this.each(function () {
+            var self=this;
+			this.each(function () {
                 var trgr = $(this),
-                    menuData = trgr.data('iw-menuData'),
-                    menu = menuData.menu;
+                    menuData = trgr.data('iw-menuData');
+                //refresh if any new element is added
+				if(!menuData) {
+					self.contextMenu('refresh');
+					menuData = trgr.data('iw-menuData');
+				}
+				
+				var  menu = menuData.menu;
                 if (typeof selector === 'object') {
 
                     for (var i = 0; i < selector.length; i++) {
@@ -148,6 +155,10 @@
                     menuId = trgr.data('iw-menuData').menuId,
                     menu = $('.iw-contextMenu[menuId=' + menuId + ']'),
                     menuData = menu.data('iw-menuData');
+				
+				 //Handle the situation of dynamically added element.
+				if(!menuData) return;
+	
 
                 if (menuData.noTrigger == 1) {
                     if (menu.hasClass('iw-created')) {
@@ -627,7 +638,7 @@
                         fun = selector[i].fun,
                         subMenu = selector[i].subMenu,
                         img = selector[i].img || '',
-                        title = selector[i].title || name,
+                        title = selector[i].title || "",
                         disable = selector[i].disable,
                         list = $('<li title="' + title + '">' + name + '</li>');
                     if (img) {
