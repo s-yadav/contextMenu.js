@@ -14,7 +14,7 @@ contextMenu.js
   <li>Lot of configurable options.</li>
   <li>Submenus</li>
 </ul>
-<strong>See demo on http://s-yadav.github.com/contextMenu.html#demo</strong>
+<strong>See demo on http://ignitersworld.com/lab/contextMenu.html#demo</strong>
 
 <h3 id="optionDoc">Options</h3>
 <table width="100%" border="1">
