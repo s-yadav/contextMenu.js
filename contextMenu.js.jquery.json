@@ -1,6 +1,6 @@
 {
     "name": "contextMenu.js",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "A light weight multi functional context menu plugin",
     "author": {
         "name": "Sudhanshu Yadav",
@@ -20,9 +20,9 @@
         "jquery": ">=1.6"
     },
 	"keywords":["context-menu","contextmenu","right-click-menu","context","submenu","jquery","popup","menu","tooltip"],
-    "demo": "http://s-yadav.github.io/contextMenu.html#demo",
-    "docs": "http://s-yadav.github.io/contextMenu.html#documentation",
-    "homepage": "http://s-yadav.github.io/contextMenu.html",
+    "demo": "http://ignitersworld.com/lab/contextMenu.html#demo",
+    "docs": "http://ignitersworld.com/lab/contextMenu.html#documentation",
+    "homepage": "http://ignitersworld.com/lab/contextMenu.html",
     "download": "https://github.com/s-yadav/contextMenu.js",
     "description": "contextMenu.js is a multi functional context menu plugin. It supports different type of input, keyboard interaction, trigger events, submenus and lot more."
 }
