@@ -1,7 +1,7 @@
 {
     "name": "contextMenu",
     "description": "contextMenu.js is a plugin to create windows like context menu with keyboard interaction, different type of inputs ,trigger events and much more.",
-    "main": "./contextMenu",
+    "main": "contextMenu.js",
     "author": {
         "name": "Sudhanshu Yadav",
         "email": "sudhanshuyadav2@gmail.com"
