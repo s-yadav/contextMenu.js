@@ -11,9 +11,9 @@
         "type": "git",
         "url": "https://github.com/s-yadav/contextMenu.js"
     },
-	"ignore": [
-		"contextMenu.js.jquery.json",
-	  ],
+    "ignore": [
+        "contextMenu.js.jquery.json"
+    ],
     "licenses": [
         {
             "type": "MIT",
