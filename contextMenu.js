@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.1.2
+ *contextMenu.js v 1.1.3
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -471,14 +471,6 @@
             option.afterOpen.call(this, clbckData, e);
 
 
-            //to add temprory textbox
-            iMethods.tempTextBox();
-
-            //to assign event
-            if (!trigger.is('input,select,textarea') && (trgrData.method == 'menu')) {
-                $('#iw-tempTxt').focus();
-            }
-
             //to add current menu class
             if (trigger.closest('.iw-contextMenu').length == 0) {
                 $('.iw-curMenu').removeClass('iw-curMenu');
@@ -493,7 +485,7 @@
                 method: trgrData.method
             };
             $('html').unbind('click', iMethods.clickEvent).click(dataParm, iMethods.clickEvent);
-            $(document.documentElement).unbind('keyup', iMethods.keyEvent).keyup(dataParm, iMethods.keyEvent);
+            $(document).unbind('keydown', iMethods.keyEvent).keydown(dataParm, iMethods.keyEvent);
             if (option.winEventClose) {
                 $(window).bind('scroll resize', dataParm, iMethods.scrollEvent);
             }
@@ -708,22 +700,6 @@
 
             });
 
-        },
-        tempTextBox: function () {
-            //to add a temproryTextBox
-            var tempText = $('<input type="text" id="iw-tempTxt" />');
-            tempText.css({
-                position: 'fixed',
-                bottom: '0px',
-                'width': '1px',
-                'font-size': '1px',
-                'outline': 'none',
-                border: '0px',
-                left: '0px',
-                opacity: '.1',
-                padding: '0px'
-            });
-            $('body').append(tempText);
         },
         optionOtimizer: function (method, option) {
             if (!option) {
