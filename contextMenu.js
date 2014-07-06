@@ -643,11 +643,14 @@
                     }
 
                     click = function () {
+                      close = methods.close.bind(this.data);
+                      close( );
                       fun = this.fun.bind(this.userData);
                       fun( );
                     }
 
                     priv = {
+                      data: trgr,
                       userData: option.userData,
                       fun: fun
                     }
