@@ -1,13 +1,15 @@
 /*
- *contextMenu.js v 1.1.3
+ *contextMenu.js v 1.2.0
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
  *Dual licensed under the MIT and GPL licenses
  */
 ;(function ($, window, document, undefined) {
+    "use strict";
+
     $.fn.contextMenu = function (method, selector, option) {
-        "use strict";
+
         //parameter fix
         if (!methods[method]) {
             option = selector;
@@ -52,10 +54,12 @@
         winEventClose: true,
         sizeStyle: 'auto', //allowed values are auto and content (popup size will be according content size)
         position: 'auto', //allowed values are top, left, bottom and right
+        closeOnClick: true, //close context menu on click/ trigger of any item in menu
+
         //callback
         onOpen: function (data, event) {},
         afterOpen: function (data, event) {},
-        onClose: function (data, event) {},
+        onClose: function (data, event) {}
     };
 
     var methods = {
@@ -69,17 +73,17 @@
             iMethods.contextMenuBind.call(this, selector, option, 'popup');
         },
         update: function (selector, option) {
-            var self=this;
-			this.each(function () {
+            var self = this;
+            this.each(function () {
                 var trgr = $(this),
                     menuData = trgr.data('iw-menuData');
                 //refresh if any new element is added
-				if(!menuData) {
-					self.contextMenu('refresh');
-					menuData = trgr.data('iw-menuData');
-				}
-				
-				var  menu = menuData.menu;
+                if (!menuData) {
+                    self.contextMenu('refresh');
+                    menuData = trgr.data('iw-menuData');
+                }
+
+                var menu = menuData.menu;
                 if (typeof selector === 'object') {
 
                     for (var i = 0; i < selector.length; i++) {
@@ -123,12 +127,12 @@
         },
         refresh: function () {
             var menuData = this.filter(function () {
-                return !!$(this).data('iw-menuData');
-            }).data('iw-menuData'),
+                    return !!$(this).data('iw-menuData');
+                }).data('iw-menuData'),
                 newElm = this.filter(function () {
                     return !$(this).data('iw-menuData');
                 });
-            //to change basetrigger on refresh	
+            //to change basetrigger on refresh  
             menuData.option.baseTrigger = this;
             iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
         },
@@ -155,10 +159,10 @@
                     menuId = trgr.data('iw-menuData').menuId,
                     menu = $('.iw-contextMenu[menuId=' + menuId + ']'),
                     menuData = menu.data('iw-menuData');
-				
-				 //Handle the situation of dynamically added element.
-				if(!menuData) return;
-	
+
+                //Handle the situation of dynamically added element.
+                if (!menuData) return;
+
 
                 if (menuData.noTrigger == 1) {
                     if (menu.hasClass('iw-created')) {
@@ -263,6 +267,10 @@
             //to stop bubbling in menu
             menu.bind('click mouseenter', function (e) {
                 e.stopPropagation();
+            });
+
+            menu.delegate('li', 'click', function (e) {
+                if (option.closeOnClick) iMethods.closeContextMenu(option, trigger, menu, e);
             });
         },
         eventHandler: function (e) {
@@ -503,6 +511,7 @@
             }
         },
         keyEvent: function (e) {
+            e.preventDefault();
             var menu = e.data.menu,
                 option = e.data.option,
                 keyCode = e.keyCode;
@@ -557,10 +566,10 @@
                     selected.click();
                     break;
                 case 40:
-                    (index == optList.length - 1 || selected.length == 0) ? first() : next();
+                    (index == optList.length - 1 || selected.length == 0) ? first(): next();
                     break;
                 case 38:
-                    (index == 0 || selected.length == 0) ? last() : prev();
+                    (index == 0 || selected.length == 0) ? last(): prev();
                     break;
                 case 33:
                     first();
@@ -580,14 +589,11 @@
         closeContextMenu: function (option, trigger, menu, e) {
 
             //unbind all events from top DOM
-            $(document.documentElement).unbind('keyup', iMethods.keyEvent);
+            $(document).unbind('keydown', iMethods.keyEvent);
             $('html').unbind('click', iMethods.clickEvent);
             $(window).unbind('scroll resize', iMethods.scrollEvent);
             $('.iw-contextMenu').hide();
             $(document).focus();
-
-            //to remove temprory textbox
-            $('#iw-tempTxt').remove();
 
             //call close function
             option.onClose.call(this, {
@@ -626,13 +632,15 @@
             if ((typeof selector == 'object') && (!selector.nodeType) && (!selector.jquery)) {
                 var menuList = $('<ul class="iw-contextMenu iw-created iw-cm-menu" id="iw-contextMenu' + randomNum + '"></ul>');
                 for (var i = 0; i < selector.length; i++) {
-                    var name = selector[i].name,
-                        fun = selector[i].fun,
-                        subMenu = selector[i].subMenu,
-                        img = selector[i].img || '',
-                        title = selector[i].title || "",
-                        disable = selector[i].disable,
-                        list = $('<li title="' + title + '">' + name + '</li>');
+                    var selObj = selector[i],
+                        name = selObj.name,
+                        fun = selObj.fun,
+                        subMenu = selObj.subMenu,
+                        img = selObj.img || '',
+                        title = selObj.title || "",
+                        className = selObj.className || "",
+                        disable = selObj.disable,
+                        list = $('<li title="' + title + '" class="' + className + '">' + name + '</li>');
                     if (img) {
                         list.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
                     }
@@ -718,6 +726,6 @@
                 option.displayAround = 'trigger';
             }
             return option;
-        },
+        }
     };
 })(jQuery, window, document);

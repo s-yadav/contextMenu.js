@@ -6,7 +6,7 @@ contextMenu.js
   <li>Use as simple popup or as a context menu. With some twick can be used for multi purpose.</li>
   <li>Adjust position and size to fit in viewport.</li>
   <li>Keyboard interaction.</li>
-  <li>Support different type of inputs (json, UL list)  .</li>
+  <li>Support different type of inputs (structure object, UL list)  .</li>
   <li>Trigger Context menu with right-click, left-click,hover or any other mouse events.</li>
   <li>Css outside of javascript so you can edit the  look of menu.</li>
   <li>Enable/disable options.</li>
@@ -149,18 +149,18 @@ Inside callback this refers to trigger element.
     <td>To manually close context menu.</td>
   </tr>
 </table>
-Popup method is default when selector type is selector string , jquery object, DOM object. Menu method is default when selector type is JSON object.
+Popup method is default when selector type is selector string , jquery object, DOM object. Menu method is default when selector type is structure object.
 <h3 id="menuParameterDoc">Context menu parameters</h3>
 Context menu accept three parameters.</p>
 <pre><code>$('.trigger).contextMenu(method,selector,options)</code></pre>
-<strong>1. method</strong> tells what operation to trigger . By default it is popup if selector is string type (selector notation) and menu if&nbsp;selector is json object.<br>
-<strong>2. selector</strong> can be document object , jQuery object ,selector string or JSON object.<br />
+<strong>1. method</strong> tells what operation to trigger . By default it is popup if selector is string type (selector notation) and menu if&nbsp;selector is structure object.<br>
+<strong>2. selector</strong> can be document object , jQuery object ,selector string or structure object.<br />
 <strong>3. option</strong>, there are different options to change the behaviour of context menu. This parameter is optional where all options contain some default value.
     .
 <h3 id="inputFormatDoc">Input format </h3>
 If defined in menu mode you can provide input in two way.<br>
 1. By passing selector of ul list.<br>
-2. By passing a JSON containg menu defination.<br>
+2. By passing a array of objects containg menu defination.<br>
 <br>
 <strong>1. UL List format</strong><br>
 <pre><code>
@@ -196,7 +196,7 @@ If defined in menu mode you can provide input in two way.<br>
   
 <br>
 <br>
-<strong>JSON object format </strong>
+<strong>Structure object format </strong>
   <pre><code>
     var menu = [{
   	    name: 'create',
@@ -299,12 +299,12 @@ Menus are closed in following actions of user.<br>
 <h3 id="updatingMenuDoc">Updating menu</h3><br>
 A menu configuration options and image icon, disabling, title and  function can be changed dynamically. If you want to change the structure, you need to destroy menu and create again.<br>
 You also can't change the option name, as it its part of structure.
-To update a menu you can pass update json and configuration option.<br><br>
-Update JSON is similiar to input JSON but in this you need to only pass those key which you want to update.
+To update a menu you can pass update structure and configuration option.<br><br>
+Update structure object is similiar to input sturcture object but in this you need to only pass those key which you want to update.
 Ex.<br>
 <pre>
 <code>
-var updateJson = [{
+var updateObj = [{
     name: 'create',
     disable: 'true',
 }, {
@@ -315,7 +315,7 @@ var updateJson = [{
     }]
 }];
 
-$('.trigger').contextMenu('update', updateJson, {
+$('.trigger').contextMenu('update', updateObj, {
     'displayAround': 'trigger',
     'containment': '#contaienr'
 });
@@ -327,13 +327,13 @@ If you know the selector of menu its great or else you can get menu object by.<b
 <br>
 Now you can update it however you want.After that call update method( with configuration option, if you want to change it).<br>
 <pre><code>
-$('.trigger').contextMenu('update',updateJson,{
+$('.trigger').contextMenu('update',updateObj,{
     'displayAround':'trigger',
     'containment':'#container'
 });
 </code></pre>
 For enabling/disabling a menu option just add "iw-mDisable" class if you are changing in html dom.<br>
-Else if you are updating using update json add disable key with value of true(to disable) or false(to enable) in json.
+Else if you are updating using structure object add disable key with value of true(to disable) or false(to enable) in object.
 
 <h3 id="refreshTriggerListDoc">Refreshing trigger list</h3>
 If you working on dynamic content you may require to add newly added element in trigger list.<br>
