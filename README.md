@@ -16,6 +16,13 @@ contextMenu.js
 </ul>
 <strong>See demo on http://ignitersworld.com/lab/contextMenu.html#demo</strong>
 
+<h3>Latest Update (v 1.2.0)</h3>
+<ol>
+  <li>Added a "closeOnClick" option to close contentext menu on click of any item.</li>
+  <li>Added a className key when generating context menu through object to give style on specific item of menu.</li>
+  <li>Fixed keybord event.</li>
+</ol>
+
 <h3 id="optionDoc">Options</h3>
 <table width="100%" border="1">
   <tr>
