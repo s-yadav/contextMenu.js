@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.2.1
+ *contextMenu.js v 1.2.2
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -260,7 +260,7 @@
                 eventType = option.triggerOn;
             }
 
-           trigger.delegate('input,a,.needs-click','click',function(e){ e.stopImmidiatePropagation()});
+           trigger.delegate('input,a,.needs-click','click',function(e){ e.stopImmediatePropagation()});
 
             //to bind event
             trigger.bind(eventType + '.contextMenu', iMethods.eventHandler);
