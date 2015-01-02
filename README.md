@@ -3,10 +3,10 @@ contextMenu.js
 <p>contextMenu.js is a   plugin to create windows like context menu with keyboard interaction, different  type of inputs ,trigger events and much more.<br />
   Why contextMenu.js ?:</p>
 <ul>
-  <li>Use as simple popup or as a context menu. With some twick can be used for multi purpose.</li>
+  <li>Use as simple popup or as a context menu. With some tweaking, it can be used for multiple purposes.</li>
   <li>Adjust position and size to fit in viewport.</li>
   <li>Keyboard interaction.</li>
-  <li>Support different type of inputs (structure object, UL list)  .</li>
+  <li>Support for different types of inputs (structure object, UL list)  .</li>
   <li>Trigger Context menu with right-click, left-click,hover or any other mouse events.</li>
   <li>Css outside of javascript so you can edit the  look of menu.</li>
   <li>Enable/disable options.</li>
@@ -159,7 +159,7 @@ Inside callback this refers to trigger element.
 Popup method is default when selector type is selector string , jquery object, DOM object. Menu method is default when selector type is structure object.
 <h3 id="menuParameterDoc">Context menu parameters</h3>
 Context menu accept three parameters.</p>
-<pre><code>$('.trigger).contextMenu(method,selector,options)</code></pre>
+<pre><code>$('.trigger').contextMenu(method,selector,options)</code></pre>
 <strong>1. method</strong> tells what operation to trigger . By default it is popup if selector is string type (selector notation) and menu if&nbsp;selector is structure object.<br>
 <strong>2. selector</strong> can be document object , jQuery object ,selector string or structure object.<br />
 <strong>3. option</strong>, there are different options to change the behaviour of context menu. This parameter is optional where all options contain some default value.
