@@ -651,7 +651,20 @@
                         list.addClass('iw-mDisable');
                     }
 
-                    list.bind('click', fun);
+                    click = function () {
+                      close = methods.close.bind(this.data);
+                      close( );
+                      fun = this.fun.bind(this.userData);
+                      fun( );
+                    }
+
+                    priv = {
+                      data: trgr,
+                      userData: option.userData,
+                      fun: fun
+                    }
+
+                    list.bind('click', click.bind( priv ));
 
                     //to create sub menu
                     menuList.append(list);
