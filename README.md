@@ -159,7 +159,7 @@ Inside callback this refers to trigger element.
 Popup method is default when selector type is selector string , jquery object, DOM object. Menu method is default when selector type is structure object.
 <h3 id="menuParameterDoc">Context menu parameters</h3>
 Context menu accept three parameters.</p>
-<pre><code>$('.trigger).contextMenu(method,selector,options)</code></pre>
+<pre><code>$('.trigger').contextMenu(method,selector,options)</code></pre>
 <strong>1. method</strong> tells what operation to trigger . By default it is popup if selector is string type (selector notation) and menu if&nbsp;selector is structure object.<br>
 <strong>2. selector</strong> can be document object , jQuery object ,selector string or structure object.<br />
 <strong>3. option</strong>, there are different options to change the behaviour of context menu. This parameter is optional where all options contain some default value.
