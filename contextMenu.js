@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.2.2
+ *contextMenu.js v 1.2.3
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -89,6 +89,10 @@
                     for (var i = 0; i < selector.length; i++) {
                         var name = selector[i].name,
                             disable = selector[i].disable,
+                            fun = selector[i].fun,
+                            img = selector[i].img,
+                            title = selector[i].title,
+                            className = selector[i].className,
                             elm = menu.children('li').filter(function () {
                                 return $(this).contents().filter(function () {
                                     return this.nodeType == 3;
@@ -96,12 +100,29 @@
                             }),
                             subMenu = selector[i].subMenu;
 
-                        if (disable == 'true') {
-                            elm.addClass('iw-mDisable');
-                        } else {
-                            elm.removeClass('iw-mDisable');
+                        //toggle disable if provided on update method
+                        disable != undefined && (disable ? elm.addClass('iw-mDisable') : elm.removeClass('iw-mDisable'));
+                        
+                        //bind new function if provided
+                        fun && elm.unbind('click.contextMenu').bind('click.contextMenu',fun);
+                        
+                        //update title
+                        title != undefined && elm.attr('title',title);
+                        
+                        //update class name
+                        className!= undefined && elm.attr('class',className);
+                        
+                        //update image
+                        if(img){
+                            var imgIcon = elm.find('.iw-mIcon');
+                            if(imgIcon.length){
+                                imgIcon[0].src = img;
+                            }
+                            else{
+                                elm.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
+                            }
                         }
-
+                        
                         //to change submenus
                         if (subMenu) {
                             elm.contextMenu('update', subMenu);
@@ -647,11 +668,11 @@
                     }
 
                     //to add disable
-                    if (disable == 'true') {
+                    if (disable) {
                         list.addClass('iw-mDisable');
                     }
 
-                    list.bind('click', fun);
+                    list.bind('click.contextMenu', fun);
 
                     //to create sub menu
                     menuList.append(list);
