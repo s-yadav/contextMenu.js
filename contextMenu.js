@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.2.3
+ *contextMenu.js v 1.3.0
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -156,6 +156,15 @@
             //to change basetrigger on refresh  
             menuData.option.baseTrigger = this;
             iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
+        },
+        open: function(sel,data){
+        	data = data || {};
+        	var e = data.event || new Event('click');
+        	if(data.top) e.clientY = data.top;
+        	if(data.left) e.clientX = data.left;
+            this.each(function(){
+                iMethods.eventHandler.call(this,e);
+            });
         },
         //to force context menu to close
         close: function () {
