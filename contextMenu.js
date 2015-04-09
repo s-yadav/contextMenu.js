@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.3.0
+ *contextMenu.js v 1.3.1
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -159,7 +159,7 @@
         },
         open: function(sel,data){
         	data = data || {};
-        	var e = data.event || new Event('click');
+        	var e = data.event || $.Event('click');
         	if(data.top) e.clientY = data.top;
         	if(data.left) e.clientX = data.left;
             this.each(function(){
