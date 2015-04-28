@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.3.1
+ *contextMenu.js v 1.3.2
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -681,7 +681,9 @@
                         list.addClass('iw-mDisable');
                     }
 
-                    list.bind('click.contextMenu', fun);
+                    list.bind('click.contextMenu', function(e){
+                        fun.call(this,{trigger:baseTrigger,menu:menuList},e);
+                    });
 
                     //to create sub menu
                     menuList.append(list);
