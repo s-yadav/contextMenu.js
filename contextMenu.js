@@ -1,5 +1,5 @@
 /*
- *contextMenu.js v 1.3.2
+ *contextMenu.js v 1.3.3
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -662,16 +662,16 @@
                 randomNum = Math.floor(Math.random() * 10000);
             if ((typeof selector == 'object') && (!selector.nodeType) && (!selector.jquery)) {
                 var menuList = $('<ul class="iw-contextMenu iw-created iw-cm-menu" id="iw-contextMenu' + randomNum + '"></ul>');
-                for (var i = 0; i < selector.length; i++) {
-                    var selObj = selector[i],
-                        name = selObj.name,
-                        fun = selObj.fun,
+                $.each(selector,function(index,selObj){
+                    var name = selObj.name,
+                        fun = selObj.fun || function(){},
                         subMenu = selObj.subMenu,
                         img = selObj.img || '',
                         title = selObj.title || "",
                         className = selObj.className || "",
                         disable = selObj.disable,
                         list = $('<li title="' + title + '" class="' + className + '">' + name + '</li>');
+                    
                     if (img) {
                         list.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
                     }
@@ -690,8 +690,9 @@
                     if (subMenu) {
                         list.append('<div class="iw-cm-arrow-right" />');
                         iMethods.subMenu(list, subMenu, baseTrigger, option);
-                    }
-                }
+                    } 
+                });
+                   
                 if (baseTrigger.index(trgr[0]) == -1) {
                     trgr.append(menuList);
                 } else {
