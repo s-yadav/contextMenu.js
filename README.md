@@ -3,10 +3,10 @@ contextMenu.js
 <p>contextMenu.js is a   plugin to create windows like context menu with keyboard interaction, different  type of inputs ,trigger events and much more.<br />
   Why contextMenu.js ?:</p>
 <ul>
-  <li>Use as simple popup or as a context menu. With some twick can be used for multi purpose.</li>
+  <li>Use as simple popup or as a context menu. With some tweaking, it can be used for multiple purposes.</li>
   <li>Adjust position and size to fit in viewport.</li>
   <li>Keyboard interaction.</li>
-  <li>Support different type of inputs (structure object, UL list)  .</li>
+  <li>Support for different types of inputs (structure object, UL list)  .</li>
   <li>Trigger Context menu with right-click, left-click,hover or any other mouse events.</li>
   <li>Css outside of javascript so you can edit the  look of menu.</li>
   <li>Enable/disable options.</li>
