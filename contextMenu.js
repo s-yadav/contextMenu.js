@@ -38,16 +38,15 @@
         }
 
         var myoptions = option;
-        if (method != 'update') {
-            option = iMethods.optionOtimizer(method, option);
-            myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
-            if (!myoptions.baseTrigger) {
-                myoptions.baseTrigger = this;
-            }
-        }
         if ($.inArray(method, ['menu', 'popup', 'close', 'destroy']) > -1) {
+            option = iMethods.optionOtimizer(method, option);
             this.each(function() {
-                methods[method].call($(this), selector, myoptions)
+                var $this = $(this)
+                myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
+                if (!myoptions.baseTrigger) {
+                    myoptions.baseTrigger = $this;
+                }
+                methods[method].call($this, selector, myoptions)
             });
         } else {
             methods[method].call(this, selector, myoptions)
