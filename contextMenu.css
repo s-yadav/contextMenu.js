@@ -66,18 +66,23 @@
   top: 3px;
   position: absolute;
 }
-.iw-cm-menu li.iw-fa:before,
-.iw-cm-menu li.iw-glyphicon:before {
-	width: 20px;
-	height: 20px;
-	left: 6px;
-	top: 6px;
-	position: absolute;
+.iw-cm-menu li[class^="fa-"]:before,
+.iw-cm-menu li[class*="fa-"]:before,
+.iw-cm-menu li[class^="glyphicon-"]:before,
+.iw-cm-menu li[class*="glyphicon-"]:before {
+  width: 30px;
+  height: 20px;
+  left: 0px;
+  top: 6px;
+  position: absolute;
+  text-align: center;
 }
-.iw-fa:before {
-	font: normal normal normal 14px/1 FontAwesome;
+.iw-cm-menu li[class^="fa-"]:before,
+.iw-cm-menu li[class*="fa-"]:before {
+  font: normal normal normal 14px/1 FontAwesome;
 }
-.iw-glyphicon:before {
-	font: normal normal normal 14px/1 'Glyphicons Halflings';
+.iw-cm-menu li[class^="glyphicon-"]:before,
+.iw-cm-menu li[class*="glyphicon-"]:before {
+  font: normal normal normal 14px/1 'Glyphicons Halflings';
 }
 /*context menu css end */
