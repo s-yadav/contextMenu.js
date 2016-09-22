@@ -64,6 +64,6 @@
   height: 20px;
   left: 0px;
   top: 3px;
-  position: absolute;
+  margin: -2px 0 -2px -2px;
 }
 /*context menu css end */
