@@ -103,7 +103,7 @@
                         var name = selector[i].name,
                             disable = selector[i].disable,
                             fun = selector[i].fun,
-							ico = selector[i].ico,
+                            icon = selector[i].icon,
                             img = selector[i].img,
                             title = selector[i].title,
                             className = selector[i].className,
@@ -126,42 +126,21 @@
                         //update class name
                         className != undefined && elm.attr('class', className);
 
-                        //update image
+                        var imgIcon = elm.find('.iw-mIcon');
+                        if(imgIcon.length) imgIcon[0].remove();
+                        
+                        //update image or icon
                         if (img) {
-                            var imgIcon = elm.find('.iw-mIcon');
-                            if (imgIcon.length) {
-                                imgIcon[0].src = img;
-                            } else {
-                                elm.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
-                            }
+                            elm.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
+                        } else if (icon) {
+                            elm.prepend('<span align="absmiddle" class="iw-mIcon '+icon+'" />');
                         }
-
-						//update ico
-                        if (ico) {
-                            var imgIcon = elm.find('.iw-mIcon');
-                            if (imgIcon.length) {
-								if(imgIcon[0].tagName.toLowerCase() === "span"){
-									var classList = ["iw-mIcon"];
-									if(typeof ico == "string")
-										classList.push(ico);
-									else
-										classList.push.apply(classList, ico);
-									imgIcon[0].classList = classList
-								} else {
-									imgIcon[0].remove()
-									elm.prepend('<span align="absmiddle" class="iw-mIcon '+ico.toString().replace(",", " ")+'" />');
-								}
-                            } else {
-                                elm.prepend('<span align="absmiddle" class="iw-mIcon '+ico.toString().replace(",", " ")+'" />');
-                            }
-                        }
-						
+                        
                         //to change submenus
                         if (subMenu) {
                             elm.contextMenu('update', subMenu);
                         }
                     }
-
                 }
 
                 iMethods.onOff(menu);
@@ -702,7 +681,7 @@
                         fun = selObj.fun || function() {},
                         subMenu = selObj.subMenu,
                         img = selObj.img || '',
-						ico = selObj.ico || '',
+                        icon = selObj.icon || '',
                         title = selObj.title || "",
                         className = selObj.className || "",
                         disable = selObj.disable,
@@ -710,9 +689,9 @@
 
                     if (img) {
                         list.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
-                    } else if (ico) {
-						list.prepend('<span align="absmiddle" class="' + ("iw-mIcon "+ico.toString().replace(","," "))+'" />');
-					}
+                    } else if (icon) {
+                        list.prepend('<span align="absmiddle" class="' + "iw-mIcon "+icon+'" />');
+                    }
                     //to add disable
                     if (disable) {
                         list.addClass('iw-mDisable');
