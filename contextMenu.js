@@ -127,7 +127,7 @@
                         className != undefined && elm.attr('class', className);
 
                         var imgIcon = elm.find('.iw-mIcon');
-                        if(imgIcon.length) imgIcon[0].remove();
+                        if(imgIcon.length) imgIcon.remove();
                         
                         //update image or icon
                         if (img) {
