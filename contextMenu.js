@@ -103,6 +103,7 @@
                         var name = selector[i].name,
                             disable = selector[i].disable,
                             fun = selector[i].fun,
+                            icon = selector[i].icon,
                             img = selector[i].img,
                             title = selector[i].title,
                             className = selector[i].className,
@@ -125,22 +126,21 @@
                         //update class name
                         className != undefined && elm.attr('class', className);
 
-                        //update image
+                        var imgIcon = elm.find('.iw-mIcon');
+                        if(imgIcon.length) imgIcon.remove();
+                        
+                        //update image or icon
                         if (img) {
-                            var imgIcon = elm.find('.iw-mIcon');
-                            if (imgIcon.length) {
-                                imgIcon[0].src = img;
-                            } else {
-                                elm.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
-                            }
+                            elm.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
+                        } else if (icon) {
+                            elm.prepend('<span align="absmiddle" class="iw-mIcon '+icon+'" />');
                         }
-
+                        
                         //to change submenus
                         if (subMenu) {
                             elm.contextMenu('update', subMenu);
                         }
                     }
-
                 }
 
                 iMethods.onOff(menu);
@@ -681,6 +681,7 @@
                         fun = selObj.fun || function() {},
                         subMenu = selObj.subMenu,
                         img = selObj.img || '',
+                        icon = selObj.icon || '',
                         title = selObj.title || "",
                         className = selObj.className || "",
                         disable = selObj.disable,
@@ -688,8 +689,9 @@
 
                     if (img) {
                         list.prepend('<img src="' + img + '" align="absmiddle" class="iw-mIcon" />');
+                    } else if (icon) {
+                        list.prepend('<span align="absmiddle" class="' + "iw-mIcon "+icon+'" />');
                     }
-
                     //to add disable
                     if (disable) {
                         list.addClass('iw-mDisable');

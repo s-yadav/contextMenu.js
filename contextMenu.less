@@ -1,0 +1,80 @@
+/*
+ *contextMenu.js v 1.4.0
+ *Author: Sudhanshu Yadav
+ *s-yadav.github.com
+ *Copyright (c) 2013 Sudhanshu Yadav.
+ *Dual licensed under the MIT and GPL licenses
+ *Lessified using http://css2less.co/
+ */
+// Color variables
+@overlay:  white;   // #ffffff;
+@bg_hover: #003366; // background hover
+@menu_bg:  #f4f4f4; // background
+
+// Calculated colors
+@label:       darken(@menu_bg, 75.5%); // #333333; font color
+@label_hover: darken(@menu_bg,  0.6%); // #f2f2f2; font color hover
+@item_border: darken(@menu_bg, 15.5%); // #cccccc; button border
+@menu_border: darken(@menu_bg,  5.5%); // #e6e6e6; menu border
+
+.iw-contextMenu {
+  -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  border: 1px solid @menu_border;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000;
+  li.iw-mDisable {
+    opacity: .3;
+  }
+}
+.iw-cm-menu {
+  background: @menu_bg;
+  color: @label;
+  margin: 0px;
+  padding: 0px;
+  li {
+    border-bottom: 1px solid @item_border;
+    cursor: pointer;
+    list-style: none;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;
+  }
+}
+.iw-mOverlay {
+  background: @overlay;
+  height: 100%;
+  left: 0px;
+  opacity: .5;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.iw-mSelected {
+  background-color: @bg_hover;
+  color: @label_hover;
+}
+.iw-cm-arrow-right {
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid @label;
+  border-top: 5px solid transparent;
+  height: 0;
+  margin-top: -3px;
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  width: 0;
+}
+.iw-mSelected>.iw-cm-arrow-right {
+  border-left: 5px solid @overlay;
+}
+.iw-mIcon {
+  height: 20px;
+  left: 0px;
+  top: 3px;
+  width: 20px;
+  position: absolute;
+}
