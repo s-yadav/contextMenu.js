@@ -1,3 +1,6 @@
+** Notice **
+Its a legacy module and I am not maintining this repo currently. So only PRs are accepeted. 
+
 contextMenu.js
 ==============
 <p>contextMenu.js is a   plugin to create windows like context menu with keyboard interaction, different  type of inputs ,trigger events and much more.<br />
