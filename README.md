@@ -19,7 +19,6 @@ contextMenu.js
   <li>Lot of configurable options.</li>
   <li>Submenus</li>
 </ul>
-<strong>See demo and documentation on http://ignitersworld.com/lab/contextMenu.html</strong>
 
 <h3>Major Updates</h3>
 
